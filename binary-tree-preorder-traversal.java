@@ -8,6 +8,9 @@
  * }
  */
 public class Solution {
+    /*
+     * Traverse by using stack.
+     */
     public ArrayList<Integer> preorderTraversal(TreeNode root) {
         // IMPORTANT: Please reset any member data you declared, as
         // the same Solution instance will be reused for each test case.
@@ -18,10 +21,10 @@ public class Solution {
         while (!stack.empty() || node != null) {
             if (node != null) {
                 result.add(node.val);
-                if (node.right != null) stack.push(node.right);
+                stack.push(node);
                 node = node.left;
             } else {
-                node = stack.pop();
+                node = stack.pop().right;
             }
         }
         

@@ -10,6 +10,12 @@
  * }
  */
 public class Solution {
+    /*
+     * newHead------>2------>1->4->3
+     *      ^        ^      ^
+     *      |        |      |
+     * previousNode node nextNode
+     */
     public ListNode swapPairs(ListNode head) {
         ListNode node, nextNode, previousNode, newHead = new ListNode(0);
         

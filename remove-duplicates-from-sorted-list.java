@@ -15,16 +15,16 @@ public class Solution {
         // the same Solution instance will be reused for each test case.
         if (head == null) return head;
         
-        ListNode preNode = head, currentNode = head.next;
-        int currentVal = head.val;
+        ListNode previousNode = head, currentNode = head.next;
+        int previousVal = head.val;
         
         while (currentNode != null) {
-            if (currentNode.val == currentVal) {
-                preNode.next = currentNode.next;
+            if (currentNode.val == previousVal) {
                 currentNode = currentNode.next;
+                previousNode.next = currentNode;
             } else {
-                preNode = currentNode;
-                currentVal = currentNode.val;
+                previousNode = currentNode;
+                previousVal = currentNode.val;
                 currentNode = currentNode.next;
             }
         }

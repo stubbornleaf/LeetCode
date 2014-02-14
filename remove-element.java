@@ -6,8 +6,7 @@ public class Solution {
         
         while (index <= last) {
             if (A[index] == elem) {
-                A[index] = A[last];
-                last--;
+                A[index] = A[last--];
             } else {
                 index++;
             }
