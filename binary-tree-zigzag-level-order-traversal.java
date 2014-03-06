@@ -13,27 +13,42 @@ public class Solution {
         
         if (root == null) return result;
         
-        LinkedList<TreeNode> deque1 = new LinkedList<TreeNode>(), deque2 = new LinkedList<TreeNode>();;
+        LinkedList<TreeNode> deque = new LinkedList<TreeNode>();
         boolean lToR = true;
+        int count = 1;
         
-        deque1.add(root);
-        while ((lToR && deque1.size() != 0) || (!lToR && deque2.size() != 0)) {
+        deque.add(root);
+        while (count > 0) {
+            int tmpCount = count;
+            count = 0;
             if (lToR) {
                 ArrayList<Integer> newRow = new ArrayList<Integer>();
-                while (deque1.size() != 0) {
-                    TreeNode tmp = deque1.pollFirst();
+                while (tmpCount-- > 0) {
+                    TreeNode tmp = deque.pollFirst();
                     newRow.add(tmp.val);
-                    if (tmp.left != null) deque2.addLast(tmp.left);
-                    if (tmp.right != null) deque2.addLast(tmp.right);
+                    if (tmp.left != null) {
+                        deque.addLast(tmp.left);
+                        count++;
+                    }
+                    if (tmp.right != null) {
+                        deque.addLast(tmp.right);
+                        count++;
+                    }
                 }
                 result.add(newRow);
             } else {
                 ArrayList<Integer> newRow = new ArrayList<Integer>();
-                while (deque2.size() != 0) {
-                    TreeNode tmp = deque2.pollLast();
+                while (tmpCount-- > 0) {
+                    TreeNode tmp = deque.pollLast();
                     newRow.add(tmp.val);
-                    if (tmp.right != null) deque1.addFirst(tmp.right);
-                    if (tmp.left != null) deque1.addFirst(tmp.left);
+                    if (tmp.right != null) {
+                        deque.addFirst(tmp.right);
+                        count++;
+                    }
+                    if (tmp.left != null) {
+                        deque.addFirst(tmp.left);
+                        count++;
+                    }
                 }
                 result.add(newRow);
             }

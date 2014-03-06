@@ -1,4 +1,7 @@
 public class Solution {
+    /*
+     * Use arrays to record if there is a queen already on diagonal.
+     */
     private int total = 0;
     
     public int totalNQueens(int n) {

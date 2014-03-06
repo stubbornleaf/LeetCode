@@ -13,24 +13,25 @@ public class Solution {
         
         if (root == null) return result;
         
-        Deque<TreeNode> queue1 = new LinkedList<TreeNode>(), queue2 = new LinkedList<TreeNode>(), tmp1, tmp2;
+        Deque<TreeNode> queue = new LinkedList<TreeNode>();
+        int count = 1;
         
-        queue1.add(root);
-        while (queue1.size() != 0 || queue2.size() != 0) {
-            if (queue1.size() != 0) {
-                tmp1 = queue1;
-                tmp2 = queue2;
-            } else {
-                tmp1 = queue2;
-                tmp2 = queue1;
-            }
-            
+        queue.add(root);
+        while (count > 0) {
             ArrayList<Integer> level = new ArrayList<Integer>();
-            while (tmp1.peek() != null) {
-                TreeNode node = tmp1.poll();
+            int tmp = count;
+            count = 0;
+            while (tmp-- > 0) {
+                TreeNode node = queue.poll();
                 level.add(node.val);
-                if (node.left != null) tmp2.add(node.left);
-                if (node.right != null) tmp2.add(node.right);
+                if (node.left != null) {
+                    queue.add(node.left);
+                    count++;
+                }
+                if (node.right != null) {
+                    queue.add(node.right);
+                    count++;
+                }
             }
             result.add(level);
         }

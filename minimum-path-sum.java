@@ -2,20 +2,26 @@ public class Solution {
     public int minPathSum(int[][] grid) {
         // IMPORTANT: Please reset any member data you declared, as
         // the same Solution instance will be reused for each test case.
-        int m, n;
-        
         if (grid.length == 0) return 0;
         
-        for (n = 1; n < grid[0].length; n++) grid[0][n] += grid[0][n - 1];
-        for (m = 1; m < grid.length; m++) grid[m][0] += grid[m - 1][0];
+        int m = grid[0].length, n = grid.length, indexM, indexN;
+        int[] result = new int[m];
         
-        for (m = 1; m < grid.length; m++) {
-            for (n = 1; n < grid[m].length; n++) {
-                if (grid[m][n - 1] > grid[m - 1][n]) grid[m][n] += grid[m - 1][n];
-                else grid[m][n] += grid[m][n - 1];
+        result[0] = grid[0][0];
+        for (indexM = 1; indexM < m; indexM++) {
+            result[indexM] = result[indexM - 1] + grid[0][indexM];
+        }
+        for (indexN = 1; indexN < n; indexN++) {
+            result[0] = result[0] + grid[indexN][0];
+            for (indexM = 1; indexM < m; indexM++) {
+                if (result[indexM] > result[indexM - 1]) {
+                    result[indexM] = result[indexM - 1] + grid[indexN][indexM];
+                } else {
+                    result[indexM] = result[indexM] + grid[indexN][indexM];
+                }
             }
         }
         
-        return grid[m - 1][n - 1];
+        return result[m - 1];
     }
 }

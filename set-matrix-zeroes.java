@@ -1,4 +1,7 @@
 public class Solution {
+    /*
+     * Use first row and column as tmp records.
+     */
     public void setZeroes(int[][] matrix) {
         if (matrix.length == 0) return;
         

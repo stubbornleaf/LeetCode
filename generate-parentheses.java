@@ -8,6 +8,7 @@ public class Solution {
     private void generateParenthesis(String current, int left, int right, ArrayList<String> result) {
         if (left != 0) {
             if (left < right) {
+                // Only put a ')' when there are more ')' than '('.
                 generateParenthesis(current + ")", left, right - 1, result);
             }
             generateParenthesis(current + "(", left - 1, right, result);

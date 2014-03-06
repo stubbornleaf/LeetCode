@@ -10,35 +10,38 @@ public class Solution {
     public void connect(TreeLinkNode root) {
         if (root == null) return;
         
-        TreeLinkNode node = root;
+        LinkedList<TreeLinkNode> queue = new LinkedList<>();
+        queue.offer(root);
+        TreeLinkNode node;
+        int count = 1;
         
-        while (node != null) {
-            TreeLinkNode newRow = null, tmp = null;
+        while (count > 0) {
+            int tmp = count;
+            count = 0;
             
-            while (node != null) {
+            while (tmp-- > 1) {
+                node = queue.poll();
+                node.next = queue.peek();
+                
                 if (node.left != null) {
-                    if (newRow == null) {
-                        newRow = node.left;
-                        tmp = newRow;
-                    } else {
-                        tmp.next = node.left;
-                        tmp = node.left;
-                    }
+                    queue.offer(node.left);
+                    count++;
                 }
                 if (node.right != null) {
-                    if (newRow == null) {
-                        newRow = node.right;
-                        tmp = newRow;
-                    } else {
-                        tmp.next = node.right;
-                        tmp = node.right;
-                    }
+                    queue.offer(node.right);
+                    count++;
                 }
-                
-                node = node.next;
             }
             
-            node = newRow;
+            node= queue.poll();
+            if (node.left != null) {
+                queue.offer(node.left);
+                count++;
+            }
+            if (node.right != null) {
+                queue.offer(node.right);
+                count++;
+            }
         }
     }
 }

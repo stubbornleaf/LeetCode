@@ -1,4 +1,7 @@
 public class Solution {
+    /*
+     * Increase farest until farest position is longer than the array length.
+     */
     public boolean canJump(int[] A) {
         if (A.length == 0) return true;
         
