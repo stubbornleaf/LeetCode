@@ -11,24 +11,26 @@ public class Solution {
             if (lengthMap.get(num[index]) != -1) continue;
             
             int length = 1, tmp = num[index] + 1, top = num[index], bottom = num[index];
-            boolean done = false;
             
+            // Find the consecutive sequence.
             while (lengthMap.containsKey(new Integer(tmp))) {
-                top = tmp;
                 length++;
                 tmp++;
             }
-            
+            top = tmp - 1;
             tmp = num[index] - 1;
             while (lengthMap.containsKey(tmp)) {
-                bottom = tmp;
                 length++;
                 tmp--;
             }
+            bottom = tmp + 1;
             
-            if (length > longest) longest = length;
-            
-            for (int j = bottom; j <= top; j++) lengthMap.put(j, length);
+            if (length > longest) {
+                longest = length;
+            }
+            for (int j = bottom; j <= top; j++) {
+                lengthMap.put(j, length);
+            }
         }
         
         return longest;
