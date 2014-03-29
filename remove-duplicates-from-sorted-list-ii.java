@@ -11,31 +11,33 @@
  */
 public class Solution {
     public ListNode deleteDuplicates(ListNode head) {
-        if (head == null) return head;
-        
-        ListNode headNode = new ListNode(head.val - 1), previous = headNode, node = head, beforePrevious = null;
-        headNode.next = head;
-        
-        while (node != null) {
-            if (node.val == previous.val) {
-                while (node != null && node.val == previous.val) {
-                    node = node.next;
-                }
-                
-                if (node == null) {
-                    beforePrevious.next = null;
-                } else {
-                    beforePrevious.next = node;
-                    previous = node;
-                    node = node.next;
-                }
-            } else {
-                beforePrevious = previous;
-                previous = node;
-                node = node.next;
-            }
+        if (head == null) {
+            return null;
         }
         
-        return headNode.next;
+        ListNode newHead =  new ListNode(-1), last = newHead, node = head.next;
+        int prevVal = head.val;
+        boolean hasDup = false;
+        
+        newHead.next = head;
+        while (node != null) {
+            if (node.val == prevVal) {
+                hasDup = true;
+            } else {
+                if (hasDup) {
+                    last.next = node;
+                    hasDup = false;
+                } else {
+                    last = last.next;
+                }
+                prevVal = node.val;
+            }
+            node = node.next;
+        }
+        if (hasDup) {
+            last.next = null;
+        }
+        
+        return newHead.next;
     }
 }

@@ -20,27 +20,21 @@ public class Solution {
             }
         });
         
+        // Initialize heap.
         for (int index = 0; index < lists.size(); index++) {
             if (lists.get(index) != null) heap.offer(lists.get(index));
         }
         
         while (heap.size() != 0) {
             ListNode tmp = heap.poll();
-            for (int index = 0; index < lists.size(); index++) {
-                ListNode list = lists.get(index);
-                if (list == tmp) {
-                    lists.remove(list);
-                    if (list.next != null) {
-                        heap.offer(list.next);
-                        lists.add(list.next);
-                    }
-                    break;
-                }
+            // Put the next node into heap if it's not null.
+            if (tmp.next != null) {
+                heap.offer(tmp.next);
             }
             node.next = tmp;
             node = tmp;
         }
         
         return result.next;
-    }
+    }   
 }

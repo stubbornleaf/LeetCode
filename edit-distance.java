@@ -1,23 +1,37 @@
 public class Solution {
     public int minDistance(String word1, String word2) {
-        int length1 = word1.length(), length2 = word2.length();
-        int[][] result = new int[length2 + 1][length1 + 1];
+        if (word1 == null && word2 == null) {
+            return 0;
+        } else if (word1 == null) {
+            return word2.length();
+        } else if (word2 == null) {
+            return word1.length();
+        }
         
-        for (int index = 0; index <= length1; index++) result[0][index] = index;
-        for (int index = 0; index <= length2; index++) result[index][0] = index;
+        int m = word1.length(), n = word2.length(), previous;
+        int[] result = new int[m + 1];
         
-        for (int i = 0; i < length2; i++) {
-            for (int j = 0; j < length1; j++) {
+        for (int i = 0; i <= m; i++) {
+            result[i] = i;
+        }
+        
+        for (int i = 0; i < n; i++) {
+            previous = result[0];
+            result[0] = i + 1;
+            for (int j = 0; j < m; j++) {
                 if (word1.charAt(j) == word2.charAt(i)) {
-                    result[i + 1][j + 1] = result[i][j];
+                    int tmp = result[j + 1];
+                    result[j + 1] = previous;
+                    previous = tmp;
                 } else {
-                    int min = result[i][j] > result[i + 1][j] ? result[i + 1][j] : result[i][j];
-                    min = result[i][j + 1] > min ? min : result[i][j + 1];
-                    result[i + 1][j + 1] = min + 1;
+                    int min = previous > result[j] ? result[j] : previous;
+                    min = min > result[j + 1] ? result[j + 1] : min;
+                    previous = result[j + 1];
+                    result[j + 1] = min + 1;
                 }
             }
         }
         
-        return result[length2][length1];
+        return result[m];
     }
 }
