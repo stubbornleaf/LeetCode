@@ -9,29 +9,26 @@
  */
 public class Solution {
     public int sumNumbers(TreeNode root) {
-        LinkedList<TreeNode> stack = new LinkedList<TreeNode>();
-        TreeNode node = root, peekNode, lastVisitedNode = null;
-        int result = 0;
+        Stack<TreeNode> stack = new Stack<>();
+        int result = 0, current = 0;
+        TreeNode node = root, last = null, peek = null;
         
-        while (node != null || stack.peek() != null) {
+        while (node != null || !stack.empty()) {
             if (node != null) {
                 stack.push(node);
+                current = current * 10 + node.val;
                 node = node.left;
             } else {
-                peekNode = stack.peek();
-                if (peekNode.right != null && peekNode.right != lastVisitedNode) {
-                    node = peekNode.right;
-                } else {
-                    if (peekNode.left == null && peekNode.right == null) {
-                        int tmp = 0;
-                        for (int index = stack.size() - 1; index >= 0; index--) {
-                            tmp = tmp * 10 + stack.get(index).val;
-                        }
-                        result += tmp;
-                    }
-                    
+                peek = stack.peek();
+                if (peek.right == null || last == peek.right) {
                     stack.pop();
-                    lastVisitedNode = peekNode;
+                    if (peek.left == null && peek.right == null) {
+                        result += current;
+                    }
+                    current /= 10;
+                    last = peek;
+                } else {
+                    node = peek.right;
                 }
             }
         }
